@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using WpfApplication1.Plumbing;
+using WpfApplication1.Views;
 
-namespace WpfApplication1
+namespace WpfApplication1.ViewModels
 {
     class MainWindowViewModel
     {
@@ -18,7 +14,11 @@ namespace WpfApplication1
 
         private void Execute(object parameter)
         {
-            
+            if ((string) parameter == "Vision")
+            {
+                var window = new VisionWindow();
+                window.ShowDialog();
+            }
         }
     }
 }
