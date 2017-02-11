@@ -5,27 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WPFMediaKit.DirectShow.Controls;assembly=WPFMediaKit"
         mc:Ignorable="d"
-        Title="Vision Demo" Height="600" Width="800">
+        Title="Vision Demo" Height="630" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
-            <RowDefinition Height="600"/>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <ComboBox HorizontalAlignment="Stretch" x:Name="VideoCapDevices"
                 ItemsSource="{Binding Source={x:Static controls:MultimediaUtil.VideoInputDevices}}"
-                DisplayMemberPath="Name" SelectedValuePath="Name" Width="600" />
+                DisplayMemberPath="Name" SelectedValuePath="Name" Width="705">
+            </ComboBox>
+            <Button Content="Capture" Command="{Binding CaptureCommand}" />
             <Button Content="Analyze" Command="{Binding AnalyzeCommand}" />
+            <Button Content="Load from file" Command="{Binding LoadImageCommand}" />
         </StackPanel>
         <controls:VideoCaptureElement
+            Visibility="{Binding VideoVisible}"
+            Grid.Column="0"
             Grid.Row="1"
             x:Name="VideoCaptureElement"
      LoadedBehavior="Play"
-     DesiredPixelWidth="800"
-     DesiredPixelHeight="600"
-     Stretch="UniformToFill"
+     DesiredPixelWidth="960"
+     DesiredPixelHeight="525"
+     Stretch="Uniform"
      VideoCaptureSource="{Binding ElementName=VideoCapDevices, Path=SelectedValue}"
      FPS="30"
      />
+        <Image Source="{Binding ImageSource}" Grid.Row="1" 
+               Visibility="{Binding ImageVisible}" />
+        <ScrollViewer Grid.Row="2">
+            <TextBlock  Text="{Binding AnalisysResult}" FontSize="18" />
+        </ScrollViewer>
     </Grid>
 </Window>

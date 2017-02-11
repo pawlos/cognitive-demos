@@ -19,6 +19,10 @@ namespace WpfApplication1.ViewModels
                 var window = new VisionWindow();
                 window.ShowDialog();
             }
+            else if ((string) parameter == "Speech")
+            {
+                
+            }
         }
     }
 }
