@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApplication1"
         mc:Ignorable="d"
         Title="Microsoft Cognitive Services" Height="350" Width="525" FontSize="30" FontWeight="Black">
     <Grid>
@@ -16,10 +15,10 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Button Content="Vision" />
-        <Button Content="Speech" Grid.Column="1"/>
-        <Button Content="Language" Grid.Row="1" />
-        <Button Content="Knowledge" Grid.Row="1" Grid.Column="1" />
-        <Button Content="Search" Grid.Row="2" Grid.ColumnSpan="2"></Button>
+        <Button Content="Vision" Command="{Binding ExecuteView}" CommandParameter="Vision" />
+        <Button Content="Speech" Grid.Row="0" Grid.Column="1" Command="{Binding ExecuteView}" CommandParameter="Speech"/>
+        <Button Content="Language" Grid.Column="0" Grid.Row="1" Command="{Binding ExecuteView}" CommandParameter="Language"/>
+        <Button Content="Knowledge" Grid.Row="1" Grid.Column="1" Command="{Binding ExecuteView}" CommandParameter="Knowledge"/>
+        <Button Content="Search" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Command="{Binding ExecuteView}" CommandParameter="Search"/>
     </Grid>
 </Window>
