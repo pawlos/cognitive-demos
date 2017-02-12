@@ -21,7 +21,23 @@ namespace WpfApplication1.ViewModels
             }
             else if ((string) parameter == "Speech")
             {
-                
+                var window = new SpeechWindow();
+                window.ShowDialog();
+            }
+            else if ((string) parameter == "Knowledge")
+            {
+                var window = new KnowledgeWindow();
+                window.ShowDialog();
+            }
+            else if ((string) parameter == "Language")
+            {
+                var window = new LanguageWindow();
+                window.ShowDialog();
+            }
+            else if ((string) parameter == "Search")
+            {
+                var window = new SearchWindow();
+                window.ShowDialog();
             }
         }
     }

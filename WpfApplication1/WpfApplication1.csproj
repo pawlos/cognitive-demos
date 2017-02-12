@@ -78,6 +78,18 @@
     <Compile Include="Engine\API.cs" />
     <Compile Include="Plumbing\JsonHelper.cs" />
     <Compile Include="ViewModels\VisionViewModel.cs" />
+    <Compile Include="Views\KnowledgeWindow.xaml.cs">
+      <DependentUpon>KnowledgeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LanguageWindow.xaml.cs">
+      <DependentUpon>LanguageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchWindow.xaml.cs">
+      <DependentUpon>SearchWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SpeechWindow.xaml.cs">
+      <DependentUpon>SpeechWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\VisionWindow.xaml.cs">
       <DependentUpon>VisionWindow.xaml</DependentUpon>
     </Compile>
@@ -93,6 +105,22 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\KnowledgeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LanguageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SpeechWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\VisionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
