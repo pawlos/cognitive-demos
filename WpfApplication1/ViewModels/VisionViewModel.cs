@@ -10,7 +10,6 @@ using PropertyChanged;
 using WpfApplication1.Engine;
 using WpfApplication1.Plumbing;
 using WPFMediaKit.DirectShow.Controls;
-using System.Threading.Tasks;
 using Microsoft.Win32;
 
 namespace WpfApplication1.ViewModels

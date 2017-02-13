@@ -1,7 +1,7 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -9,6 +9,23 @@ namespace WpfApplication1.Engine
 {
     static class Api
     {
+        public static async Task<HttpResponseMessage> RequestVoiceEnrollment(byte[] data)
+        {
+            var client = new HttpClient();
+
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings["SpeechAPI"]);
+            var profileId = Guid.Parse("");
+            var uri = $"https://westus.api.cognitive.microsoft.com/spid/v1.0/identificationProfiles/{profileId}/enroll";
+
+            HttpResponseMessage response;
+
+            using (var content = new ByteArrayContent(data))
+            {
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                response = await client.PostAsync(uri, content);
+            }
+            return response;
+        }
         public static async Task<HttpResponseMessage> RequestImageAnalisys(byte[] data)
         {
             var client = new HttpClient();
@@ -27,7 +44,38 @@ namespace WpfApplication1.Engine
 
             using (var content = new ByteArrayContent(data))
             {
-                //{"url":"http://example.com/images/test.jpg"}
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                response = await client.PostAsync(uri, content);
+            }
+            return response;
+        }
+
+        public static async Task<HttpResponseMessage> CreateSpeakerProfile()
+        {
+            var client = new HttpClient();
+
+            var uri = "https://westus.api.cognitive.microsoft.com/spid/v1.0/identificationProfiles";
+
+            HttpResponseMessage response;
+
+            using (var content = new StringContent(@"{ ""locale"": ""en-us""}"))
+            {
+                content.Headers.ContentType = new MediaTypeHeaderValue("text/plain");
+                response = await client.PostAsync(uri, content);
+            }
+            return response;
+        }
+
+        public static async Task<HttpResponseMessage> RequestVoiceVerification(byte[] data, Guid speakerIdentificationId)
+        {
+            var client = new HttpClient();
+
+            var uri = $"https://westus.api.cognitive.microsoft.com/spid/v1.0/verify?verificationProfileId={speakerIdentificationId}";
+
+            HttpResponseMessage response;
+
+            using (var content = new ByteArrayContent(data))
+            {
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 response = await client.PostAsync(uri, content);
             }
