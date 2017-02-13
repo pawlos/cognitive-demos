@@ -19,7 +19,7 @@
             <Button Content="Verify" Command="{Binding VerifyCommand}" />
         </StackPanel>
         <ScrollViewer Grid.Row="1">
-            <TextBlock  Text="{Binding AnalisysResult}" FontSize="18" />
+            <TextBox Text="{Binding AnalysisResult}" FontSize="18" />
         </ScrollViewer>
     </Grid>
 </Window>

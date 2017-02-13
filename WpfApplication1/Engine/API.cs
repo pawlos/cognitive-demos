@@ -9,12 +9,11 @@ namespace WpfApplication1.Engine
 {
     static class Api
     {
-        public static async Task<HttpResponseMessage> RequestVoiceEnrollment(byte[] data)
+        public static async Task<HttpResponseMessage> RequestVoiceEnrollment(byte[] data, Guid profileId)
         {
             var client = new HttpClient();
 
             client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings["SpeechAPI"]);
-            var profileId = Guid.Parse("");
             var uri = $"https://westus.api.cognitive.microsoft.com/spid/v1.0/identificationProfiles/{profileId}/enroll";
 
             HttpResponseMessage response;
@@ -54,13 +53,13 @@ namespace WpfApplication1.Engine
         {
             var client = new HttpClient();
 
-            var uri = "https://westus.api.cognitive.microsoft.com/spid/v1.0/identificationProfiles";
-
+            var uri = "https://westus.api.cognitive.microsoft.com/spid/v1.0/identificationProfiles?";
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings["SpeechAPI"]);
             HttpResponseMessage response;
 
-            using (var content = new StringContent(@"{ ""locale"": ""en-us""}"))
+            using (var content = new StringContent(@"{'locale': 'en-us'}"))
             {
-                content.Headers.ContentType = new MediaTypeHeaderValue("text/plain");
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 response = await client.PostAsync(uri, content);
             }
             return response;
@@ -69,6 +68,7 @@ namespace WpfApplication1.Engine
         public static async Task<HttpResponseMessage> RequestVoiceVerification(byte[] data, Guid speakerIdentificationId)
         {
             var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings["SpeechAPI"]);
 
             var uri = $"https://westus.api.cognitive.microsoft.com/spid/v1.0/verify?verificationProfileId={speakerIdentificationId}";
 

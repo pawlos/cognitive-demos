@@ -30,6 +30,7 @@ namespace WpfApplication1.ViewModels
             AnalysisResult = "Recording started...";
             _waveIn = new WaveIn {DeviceNumber = 0};
             _bufferedWaveProvider = new BufferedWaveProvider(_waveIn.WaveFormat);
+            _waveIn.NumberOfBuffers = 3;
             _waveIn.DataAvailable += waveIn_DataAvailable;
             int sampleRate = 16000; // 8 kHz
             int channels = 1; // mono
@@ -66,7 +67,7 @@ namespace WpfApplication1.ViewModels
         {
             AnalysisResult = "Enrollment...";
             byte[] data = _bufferedWaveProvider.ToByteArray();
-            var apiResult = await Api.RequestVoiceEnrollment(data);
+            var apiResult = await Api.RequestVoiceEnrollment(data, SelectedSpeaker);
             AnalysisResult = JsonHelper.FormatJson(await apiResult.Content.ReadAsStringAsync());
         }
         

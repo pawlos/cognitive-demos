@@ -35,22 +35,22 @@ namespace WpfApplication1.ViewModels
                 CapturedData = ImageToBytes(ImageSource);
                 VideoVisible = false;
             }
-            AnalisysResult = "Loaded";
+            AnalysisResult = "Loaded";
         }
 
         private async void Analyze(object obj)
         {
             if (CapturedData == null || CapturedData.Length == 0)
             {
-                AnalisysResult = "Missing captured data";
+                AnalysisResult = "Missing captured data";
                 return;
             }
-            AnalisysResult = "Analyzing...";
+            AnalysisResult = "Analyzing...";
             //analyze it
             var analysis = Api.RequestImageAnalisys(CapturedData);
             //display information
             var result = await analysis;
-            AnalisysResult = JsonHelper.FormatJson(await result.Content.ReadAsStringAsync());
+            AnalysisResult = JsonHelper.FormatJson(await result.Content.ReadAsStringAsync());
         }
 
         private void Capture(object obj)
@@ -58,7 +58,7 @@ namespace WpfApplication1.ViewModels
             var videoImageProperty = typeof(VideoCaptureElement).GetProperty("VideoImage", BindingFlags.NonPublic | BindingFlags.Instance);
             var value = (Image)videoImageProperty.GetValue(VideoCapture);
             CapturedData = ImageToBytes(value.Source);
-            AnalisysResult = "Captured";
+            AnalysisResult = "Captured";
         }
 
         public ImageSource ImageSource { get; set; }
@@ -96,7 +96,7 @@ namespace WpfApplication1.ViewModels
 
         private byte[] CapturedData { get; set; }
         public VideoCaptureElement VideoCapture { get; set; }
-        public string AnalisysResult { get; set; }
+        public string AnalysisResult { get; set; }
 
         public ICommand AnalyzeCommand { get; set; }
 
