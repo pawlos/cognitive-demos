@@ -17,8 +17,8 @@
         </Grid.RowDefinitions>
         <Button Content="Vision" Command="{Binding ExecuteView}" CommandParameter="Vision" />
         <Button Content="Speech" Grid.Row="0" Grid.Column="1" Command="{Binding ExecuteView}" CommandParameter="Speech"/>
-        <Button Content="Language" Grid.Column="0" Grid.Row="1" Command="{Binding ExecuteView}" CommandParameter="Language"/>
-        <Button Content="Knowledge" Grid.Row="1" Grid.Column="1" Command="{Binding ExecuteView}" CommandParameter="Knowledge"/>
+        <Button Content="Language" Grid.Column="0" IsEnabled="False" Grid.Row="1" Command="{Binding ExecuteView}" CommandParameter="Language"/>
+        <Button Content="Knowledge" IsEnabled="False"  Grid.Row="1" Grid.Column="1" Command="{Binding ExecuteView}" CommandParameter="Knowledge"/>
         <Button Content="Search" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Command="{Binding ExecuteView}" CommandParameter="Search"/>
     </Grid>
 </Window>

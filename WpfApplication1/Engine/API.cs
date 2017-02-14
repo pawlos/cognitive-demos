@@ -81,5 +81,15 @@ namespace WpfApplication1.Engine
             }
             return response;
         }
+
+        public static async Task<HttpResponseMessage> GetAutosuggestResult(string searchPhrase)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings["AutosuggestApi"]);
+            client.DefaultRequestHeaders.Add("BingAPIs-Market", "en-US");
+            var uri = "https://api.cognitive.microsoft.com/bing/v5.0/suggestions/?q=" + searchPhrase;
+
+            return await client.GetAsync(uri);
+        }
     }
 }

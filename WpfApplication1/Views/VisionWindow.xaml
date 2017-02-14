@@ -6,6 +6,9 @@
         xmlns:controls="clr-namespace:WPFMediaKit.DirectShow.Controls;assembly=WPFMediaKit"
         mc:Ignorable="d"
         Title="Vision Demo" Height="630" Width="800">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
@@ -13,16 +16,17 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <ComboBox HorizontalAlignment="Stretch" x:Name="VideoCapDevices"
+            <ComboBox x:Name="VideoCapDevices"
                 ItemsSource="{Binding Source={x:Static controls:MultimediaUtil.VideoInputDevices}}"
-                DisplayMemberPath="Name" SelectedValuePath="Name" Width="705">
+                DisplayMemberPath="Name" SelectedValuePath="Name" Width="600">
             </ComboBox>
+            <Button Content="Video" Command="{Binding SwitchToVideoCommand}" />
             <Button Content="Capture" Command="{Binding CaptureCommand}" />
             <Button Content="Analyze" Command="{Binding AnalyzeCommand}" />
             <Button Content="Load from file" Command="{Binding LoadImageCommand}" />
         </StackPanel>
         <controls:VideoCaptureElement
-            Visibility="{Binding VideoVisible}"
+            Visibility="{Binding VideoVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
             Grid.Column="0"
             Grid.Row="1"
             x:Name="VideoCaptureElement"
@@ -34,7 +38,7 @@
      FPS="30"
      />
         <Image Source="{Binding ImageSource}" Grid.Row="1" 
-               Visibility="{Binding ImageVisible}" />
+               Visibility="{Binding ImageVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <ScrollViewer Grid.Row="2">
             <TextBlock  Text="{Binding AnalysisResult}" FontSize="18" />
         </ScrollViewer>

@@ -22,6 +22,10 @@ namespace WpfApplication1.ViewModels
             AnalyzeCommand = new RelayCommand(p=>true, Analyze);
             CaptureCommand = new RelayCommand(p=>true, Capture);
             LoadImageCommand = new RelayCommand(p=>true, LoadImage);
+            SwitchToVideoCommand = new RelayCommand(p=>true, p => {
+                VideoVisible = true;
+                ImageVisible = false;
+            });
 
             VideoVisible = true;
         }
@@ -34,6 +38,7 @@ namespace WpfApplication1.ViewModels
                 ImageSource = new BitmapImage(new Uri(ofd.FileName));
                 CapturedData = ImageToBytes(ImageSource);
                 VideoVisible = false;
+                ImageVisible = true;
             }
             AnalysisResult = "Loaded";
         }
@@ -97,6 +102,8 @@ namespace WpfApplication1.ViewModels
         private byte[] CapturedData { get; set; }
         public VideoCaptureElement VideoCapture { get; set; }
         public string AnalysisResult { get; set; }
+
+        public ICommand SwitchToVideoCommand { get; set; }
 
         public ICommand AnalyzeCommand { get; set; }
 

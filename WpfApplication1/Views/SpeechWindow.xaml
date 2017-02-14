@@ -13,8 +13,8 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <TextBox Text="{Binding SelectedSpeaker}" />
-            <Button Content="Record" Command="{Binding RecordCommand}" />
             <Button Content="Create profile" Command="{Binding CreateProfileCommand}" />
+            <Button Content="Record" Command="{Binding RecordCommand}" />
             <Button Content="Enroll" Command="{Binding EnrollCommand}" />
             <Button Content="Verify" Command="{Binding VerifyCommand}" />
         </StackPanel>

@@ -1,6 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Input;
-using NAudio.Wave;
+using Microsoft.Win32;
 using PropertyChanged;
 using WpfApplication1.Engine;
 using WpfApplication1.Plumbing;
@@ -20,34 +21,16 @@ namespace WpfApplication1.ViewModels
 
         private void Record(object obj)
         {
-            if (_isRecording)
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() ?? false)
             {
-                _waveIn.StopRecording();
-                AnalysisResult = "Recording stopped...";
-                _isRecording = false;
-                return;
+                AnalysisData = File.ReadAllBytes(ofd.FileName);
             }
-            AnalysisResult = "Recording started...";
-            _waveIn = new WaveIn {DeviceNumber = 0};
-            _bufferedWaveProvider = new BufferedWaveProvider(_waveIn.WaveFormat);
-            _waveIn.NumberOfBuffers = 3;
-            _waveIn.DataAvailable += waveIn_DataAvailable;
-            int sampleRate = 16000; // 8 kHz
-            int channels = 1; // mono
-            _waveIn.WaveFormat = new WaveFormat(sampleRate, channels);
-            _waveIn.StartRecording();
-            _isRecording = true;
+            AnalysisResult = "Loaded";
         }
 
-        private void waveIn_DataAvailable(object sender, WaveInEventArgs e)
-        {
-            _bufferedWaveProvider.AddSamples(e.Buffer, 0, e.BytesRecorded);
-            //AnalysisData = bufferedWaveProvider;
-        }
 
-        private BufferedWaveProvider _bufferedWaveProvider;
-        private bool _isRecording;
-        private WaveIn _waveIn;
+
         private async void CreateProfile(object obj)
         {
             AnalysisResult = "Creating profile...";
@@ -58,16 +41,14 @@ namespace WpfApplication1.ViewModels
         private async void Verify(object obj)
         {
             AnalysisResult = "Verifivation...";
-            byte[] data = _bufferedWaveProvider.ToByteArray();
-            var apiResult = await Api.RequestVoiceVerification(data, SelectedSpeaker);
+            var apiResult = await Api.RequestVoiceVerification(AnalysisData, SelectedSpeaker);
             AnalysisResult = JsonHelper.FormatJson(await apiResult.Content.ReadAsStringAsync());
         }
 
         private async void Enroll(object obj)
         {
             AnalysisResult = "Enrollment...";
-            byte[] data = _bufferedWaveProvider.ToByteArray();
-            var apiResult = await Api.RequestVoiceEnrollment(data, SelectedSpeaker);
+            var apiResult = await Api.RequestVoiceEnrollment(AnalysisData, SelectedSpeaker);
             AnalysisResult = JsonHelper.FormatJson(await apiResult.Content.ReadAsStringAsync());
         }
         
