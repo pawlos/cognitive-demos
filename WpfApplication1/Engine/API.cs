@@ -14,7 +14,7 @@ namespace WpfApplication1.Engine
             var client = new HttpClient();
 
             client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings["SpeechAPI"]);
-            var uri = $"https://westus.api.cognitive.microsoft.com/spid/v1.0/identificationProfiles/{profileId}/enroll";
+            var uri = $"https://westus.api.cognitive.microsoft.com/spid/v1.0/verificationProfiles/{profileId}/enroll";
 
             HttpResponseMessage response;
 
@@ -53,7 +53,7 @@ namespace WpfApplication1.Engine
         {
             var client = new HttpClient();
 
-            var uri = "https://westus.api.cognitive.microsoft.com/spid/v1.0/identificationProfiles?";
+            var uri = "https://westus.api.cognitive.microsoft.com/spid/v1.0/verificationProfiles";
             client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings["SpeechAPI"]);
             HttpResponseMessage response;
 
@@ -88,6 +88,17 @@ namespace WpfApplication1.Engine
             client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings["AutosuggestApi"]);
             client.DefaultRequestHeaders.Add("BingAPIs-Market", "en-US");
             var uri = "https://api.cognitive.microsoft.com/bing/v5.0/suggestions/?q=" + searchPhrase;
+
+            return await client.GetAsync(uri);
+        }
+
+        public static async Task<HttpResponseMessage> LoadProfile(Guid verificationProfileId)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings["SpeechAPI"]);
+
+            var uri =
+                $"https://westus.api.cognitive.microsoft.com/spid/v1.0/verificationProfiles/{verificationProfileId}";
 
             return await client.GetAsync(uri);
         }

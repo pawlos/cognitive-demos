@@ -16,7 +16,15 @@ namespace WpfApplication1.ViewModels
             RecordCommand = new RelayCommand(p=>true, Record);
             EnrollCommand = new RelayCommand(p=>true, Enroll);
             VerifyCommand = new RelayCommand(p=>true, Verify);
+            LoadProfileCommand = new RelayCommand(p=>true, Load);
             CreateProfileCommand = new RelayCommand(p=>true, CreateProfile);
+        }
+
+        private async void Load(object obj)
+        {
+            AnalysisResult = "Loading profile...";
+            var apiResult = await Api.LoadProfile(SelectedSpeaker);
+            AnalysisResult = JsonHelper.FormatJson(await apiResult.Content.ReadAsStringAsync());
         }
 
         private void Record(object obj)
@@ -60,7 +68,7 @@ namespace WpfApplication1.ViewModels
         public ICommand CreateProfileCommand { get; set; }
         public ICommand EnrollCommand { get; set; }
         public ICommand VerifyCommand { get; set; }
-
+        public ICommand LoadProfileCommand { get; set; }
         public string AnalysisResult { get; set; }
     }
 }

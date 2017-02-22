@@ -14,7 +14,8 @@
         <StackPanel Orientation="Horizontal">
             <TextBox Text="{Binding SelectedSpeaker}" />
             <Button Content="Create profile" Command="{Binding CreateProfileCommand}" />
-            <Button Content="Record" Command="{Binding RecordCommand}" />
+            <Button Content="Get profile" Command="{Binding LoadProfileCommand}" />
+            <Button Content="Load" Command="{Binding RecordCommand}" />
             <Button Content="Enroll" Command="{Binding EnrollCommand}" />
             <Button Content="Verify" Command="{Binding VerifyCommand}" />
         </StackPanel>
