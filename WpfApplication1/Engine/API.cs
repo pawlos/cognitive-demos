@@ -49,6 +49,40 @@ namespace WpfApplication1.Engine
             return response;
         }
 
+        public static async Task<HttpResponseMessage> RequestFaceAnalisys(byte[] data)
+        {
+            var client = new HttpClient();
+
+            var queryString = HttpUtility.ParseQueryString(string.Empty);
+            queryString["returnFaceAttributes"] = "age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise";
+            queryString["returnFaceLandmarks"] = "true";
+            var uri = "https://westeurope.api.cognitive.microsoft.com/face/v1.0/detect?" + queryString;
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings["FaceAPI"]);
+
+            HttpResponseMessage response;
+            using (var content = new ByteArrayContent(data))
+            {
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                response = await client.PostAsync(uri, content);
+            }
+            return response;
+        }
+
+        public static async Task<HttpResponseMessage> RequestEmotionsAnalisys(byte[] data)
+        {
+            var client = new HttpClient();
+            var uri = "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize";
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings["EmotionsAPI"]);
+
+            HttpResponseMessage response;
+            using (var content = new ByteArrayContent(data))
+            {
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                response = await client.PostAsync(uri, content);
+            }
+            return response;
+        }
+
         public static async Task<HttpResponseMessage> CreateSpeakerProfile()
         {
             var client = new HttpClient();

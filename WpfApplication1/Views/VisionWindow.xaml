@@ -20,9 +20,11 @@
                 ItemsSource="{Binding Source={x:Static controls:MultimediaUtil.VideoInputDevices}}"
                 DisplayMemberPath="Name" SelectedValuePath="Name" Width="600">
             </ComboBox>
-            <Button Content="Video" Command="{Binding SwitchToVideoCommand}" />
+            <!--<Button Content="Video" Command="{Binding SwitchToVideoCommand}" />-->
             <Button Content="Capture" Command="{Binding CaptureCommand}" />
-            <Button Content="Analyze" Command="{Binding AnalyzeCommand}" />
+            <!--<Button Content="Analyze" Command="{Binding AnalyzeCommand}" />-->
+            <Button Content="Face API" Command="{Binding FaceCommand}" />
+            <Button Content="Emotions API" Command="{Binding EmotionsCommand}" />
             <Button Content="Load from file" Command="{Binding LoadImageCommand}" />
         </StackPanel>
         <controls:VideoCaptureElement

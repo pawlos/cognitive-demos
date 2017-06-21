@@ -22,12 +22,44 @@ namespace WpfApplication1.ViewModels
             AnalyzeCommand = new RelayCommand(p=>true, Analyze);
             CaptureCommand = new RelayCommand(p=>true, Capture);
             LoadImageCommand = new RelayCommand(p=>true, LoadImage);
+            FaceCommand = new RelayCommand(p => true, FaceAPI);
+            EmotionsCommand = new RelayCommand(p => true, EmotionsAPI);
             SwitchToVideoCommand = new RelayCommand(p=>true, p => {
                 VideoVisible = true;
                 ImageVisible = false;
             });
 
             VideoVisible = true;
+        }
+
+        private async void EmotionsAPI(object obj)
+        {
+            if (CapturedData == null || CapturedData.Length == 0)
+            {
+                AnalysisResult = "Missing captured data";
+                return;
+            }
+            AnalysisResult = "Analyzing...";
+            //analyze it
+            var analysis = Api.RequestEmotionsAnalisys(CapturedData);
+            //display information
+            var result = await analysis;
+            AnalysisResult = JsonHelper.FormatJson(await result.Content.ReadAsStringAsync());
+        }
+
+        private async void FaceAPI(object obj)
+        {
+            if (CapturedData == null || CapturedData.Length == 0)
+            {
+                AnalysisResult = "Missing captured data";
+                return;
+            }
+            AnalysisResult = "Analyzing...";
+            //analyze it
+            var analysis = Api.RequestFaceAnalisys(CapturedData);
+            //display information
+            var result = await analysis;
+            AnalysisResult = JsonHelper.FormatJson(await result.Content.ReadAsStringAsync());
         }
 
         private void LoadImage(object obj)
@@ -110,5 +142,10 @@ namespace WpfApplication1.ViewModels
         public ICommand CaptureCommand { get; set; }
 
         public ICommand LoadImageCommand { get; set; }
+
+
+        public ICommand FaceCommand { get; set; }
+
+        public ICommand EmotionsCommand { get; set; }
     }
 }
